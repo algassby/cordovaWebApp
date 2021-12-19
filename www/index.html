@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="js/jquery-3.2.1.slim.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+        <script >
+            $(document).ready(function() {
+                function restoreArrayData() {
+                    if(localStorage.getItem("musics")){
+                        var myArrayObject = Array.from(JSON.parse(localStorage.getItem("musics")));
+                    }
+                else{
+                    var myArrayObject = Array.from(new Array());
+                }
+                $("#displayArrayDataHere").addClass('container mx-auto').append("<ul>");
+                myArrayObject.forEach(function(currentMusic) {
+                    $("ul").addClass("list-group").append('<li class="list-group-item"> <div class="card-body"> <h5 class="card-title">'+currentMusic.singerName+'</h5>'
+                        +' <p class="card-text">'+ currentMusic.musicName+'</p> <button type="button" class="btn btn-details btn-primary"'+ `id='${JSON.stringify(currentMusic)}'`+'>Details</button></div>'
+                
+                        
+                        +'</li>')
+                })
+                $("#displayArrayDataHere").append("</ul>");
+        
+                //localStorage.removeItem("musics");
+                
+            }
+       
+                $('.btn-close-details').click('click',function(){
+                   
+                    $('.modal-h').remove()
+                    $('.modal-by').remove();
+            
+               });
+            
+            function details(){
+               
+                $(".btn-details").click(function(){
+                    let currentMusic = JSON.parse(this.id);
+                   
+                    console.log(currentMusic.singerName);
+
+                    var id = $('')
+                    $('.modal-content').append('<div class="modal-header modal-h" style="background-color: aqua;" id="'+`modalHeader${JSON.stringify(currentMusic)}`+'"><h5 class="modal-title"> '
+                        +`${currentMusic.singerName}`
+                    +'<div class="modal-body modal-b" style="background-color: white;" id="'+`modalBody${JSON.stringify(currentMusic)}`+'"><p>'+`${currentMusic.musicName}`+'</p></div>');
+                $("#myModal").modal('show');
+                //console.log(music.singerName)
+            });
+            }
+            
+            restoreArrayData();
+            details();
+        
+            //show modal
+
+            });
+             window.addEventListener("load", () => {
+        if ("cordova" in window) {
+             //oneSignal
+          var OneSignal = window.OneSignal || [];
+          var initConfig = {
+            appId: "76c69fac-45b5-4ec7-9144-2829a11d7b2a",
+            notifyButton: {
+              enable: true,
+            },
+          };
+          OneSignal.push(function () {
+            OneSignal.SERVICE_WORKER_PARAM = { scope: "push/onesignal/" };
+            OneSignal.SERVICE_WORKER_PATH =
+              "push/onesignal/OneSignalSDKWorker.js";
+            OneSignal.SERVICE_WORKER_UPDATER_PATH =
+              "push/onesignal/OneSignalSDKUpdaterWorker.js";
+            OneSignal.init(initConfig);
+          });
+        } else {
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+              .register("service-worker.js", { scope: "./" })
+              .then(function (reg) {});
+          }
+          //oneSignal
+          var OneSignal = window.OneSignal || [];
+          var initConfig = {
+            appId:"************************",
+            notifyButton: {
+              enable: true,
+            },
+          };
+          OneSignal.push(function () {
+            OneSignal.SERVICE_WORKER_PARAM = { scope: "push/onesignal/" };
+            OneSignal.SERVICE_WORKER_PATH =
+              "push/onesignal/OneSignalSDKWorker.js";
+            OneSignal.SERVICE_WORKER_UPDATER_PATH =
+              "push/onesignal/OneSignalSDKUpdaterWorker.js";
+            OneSignal.init(initConfig);
+          });
+
+         }
+      });
+            // window.addEventListener("load", () => {
+            // if ("serviceWorker" in navigator) {
+            //     navigator.serviceWorker.register("service-worker.js");
+            // }
+            // });
+           // $( document ).ready(function() {
+    //   $( "#submitForm" ).submit(function( event ) {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    //   });
+    // });
+    
+        </script>
+        
+        <meta charset="utf-8">
+    
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+        <link rel="manifest" href="manifest.json" />
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/index.css">
+  
+
+        <title>Welcome on My music</title>
+    </head>
+    <body>
+        <div class="app">
+            <div  class="title">
+                <a class="navbar-brand" href="index.html"
+                ><img src="img/logo.png" height="48" width="48" />Top of music</a
+              >
+            </div>
+        </div>
+        <!--Dislay table-->
+  <div class="container" id="displayArrayDataHere">
+
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: aqua;">
+          <h5 class="modal-title" id="exampleModalLabel" >Add a new song</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="submitForm" action="index.html" method="post">
+                <div class="form-group">
+                  <label for="musicName">Music name</label>
+                  <input type="text" class="form-control" id="musicName" aria-describedby="musicName" placeholder="Enter musicName" required>
+                </div>
+                <div class="form-group">
+                  <label for="singerName">Singer Name</label>
+                  <input type="text" class="form-control" id="singerName" placeholder="Enter singerName">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-submit" data-dismiss="modal">Save changes</button>
+                  </div>
+              </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <!-- Modal HTML -->
+  <div id="myModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-close-details" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+    </script>
+        <button class="img-responsive btn btn-default" data-toggle="modal" data-target="#exampleModal" id="showForm" type="button">
+            <img src="img/material-icon-2155448_960_720.png" class="img-responsive btn-show-form" alt="btnAdd">
+        </button>
+        <script src="js/index.js"></script> 
+        <script src="js/popper.min.js"></script>
+        <script src="js/save.js"></script>
+   
+    </body>
+</html>

@@ -1,0 +1,32 @@
+body{
+    margin: auto;
+    max-width: 100%;
+}
+.app{
+    background-color: #00ffff;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+}
+.navbar-brand{
+    display: flex;
+    justify-content: space-between;
+
+}
+.btn-show-form{
+    position:fixed;
+    bottom:0;
+    right:0;
+}
+div.img-offline{
+    justify-content: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+img#imgOffLine{
+
+    max-width : 70%;
+    height: auto;
+    display: block;
+}
