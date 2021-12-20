@@ -2,10 +2,56 @@
 
 <html>
     <head>
+      <link rel="manifest" href="manifest.json" />
         <script src="js/jquery-3.2.1.slim.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
         <script >
+
+window.addEventListener("load", () => {
+        if ("cordova" in window) {
+             //oneSignal
+          var OneSignal = window.OneSignal || [];
+          var initConfig = {
+            appId: "76c69fac-45b5-4ec7-9144-2829a11d7b2a",
+            notifyButton: {
+              enable: true,
+            },
+          };
+          OneSignal.push(function () {
+            OneSignal.SERVICE_WORKER_PARAM = { scope: "push/onesignal/" };
+            OneSignal.SERVICE_WORKER_PATH =
+              "push/onesignal/OneSignalSDKWorker.js";
+            OneSignal.SERVICE_WORKER_UPDATER_PATH =
+              "push/onesignal/OneSignalSDKUpdaterWorker.js";
+            OneSignal.init(initConfig);
+          });
+        } else {
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+              .register("service-worker.js", { scope: "./" })
+              .then(function (reg) {});
+          }
+          //oneSignal
+          var OneSignal = window.OneSignal || [];
+          var initConfig = {
+            appId: "76c69fac-45b5-4ec7-9144-2829a11d7b2a",
+            notifyButton: {
+              enable: true,
+            },
+          };
+          OneSignal.push(function () {
+            OneSignal.SERVICE_WORKER_PARAM = { scope: "push/onesignal/" };
+            OneSignal.SERVICE_WORKER_PATH =
+              "push/onesignal/OneSignalSDKWorker.js";
+            OneSignal.SERVICE_WORKER_UPDATER_PATH =
+              "push/onesignal/OneSignalSDKUpdaterWorker.js";
+            OneSignal.init(initConfig);
+          });
+
+         }
+      });
+      //autres traitement
             $(document).ready(function() {
                 function restoreArrayData() {
                     if(localStorage.getItem("musics")){
@@ -57,49 +103,7 @@
             //show modal
 
             });
-             window.addEventListener("load", () => {
-        if ("cordova" in window) {
-             //oneSignal
-          var OneSignal = window.OneSignal || [];
-          var initConfig = {
-            appId: "76c69fac-45b5-4ec7-9144-2829a11d7b2a",
-            notifyButton: {
-              enable: true,
-            },
-          };
-          OneSignal.push(function () {
-            OneSignal.SERVICE_WORKER_PARAM = { scope: "push/onesignal/" };
-            OneSignal.SERVICE_WORKER_PATH =
-              "push/onesignal/OneSignalSDKWorker.js";
-            OneSignal.SERVICE_WORKER_UPDATER_PATH =
-              "push/onesignal/OneSignalSDKUpdaterWorker.js";
-            OneSignal.init(initConfig);
-          });
-        } else {
-          if ("serviceWorker" in navigator) {
-            navigator.serviceWorker
-              .register("service-worker.js", { scope: "./" })
-              .then(function (reg) {});
-          }
-          //oneSignal
-          var OneSignal = window.OneSignal || [];
-          var initConfig = {
-            appId:"************************",
-            notifyButton: {
-              enable: true,
-            },
-          };
-          OneSignal.push(function () {
-            OneSignal.SERVICE_WORKER_PARAM = { scope: "push/onesignal/" };
-            OneSignal.SERVICE_WORKER_PATH =
-              "push/onesignal/OneSignalSDKWorker.js";
-            OneSignal.SERVICE_WORKER_UPDATER_PATH =
-              "push/onesignal/OneSignalSDKUpdaterWorker.js";
-            OneSignal.init(initConfig);
-          });
-
-         }
-      });
+          
             // window.addEventListener("load", () => {
             // if ("serviceWorker" in navigator) {
             //     navigator.serviceWorker.register("service-worker.js");
@@ -120,7 +124,6 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <meta name="color-scheme" content="light dark">
-        <link rel="manifest" href="manifest.json" />
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/index.css">
   
@@ -166,7 +169,6 @@
                   </div>
               </form>
         </div>
-        
         
       </div>
     </div>
