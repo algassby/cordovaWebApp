@@ -1,7 +1,7 @@
 {
     "name": "my music",
     "short_name": "Music",
-    "start_url": "index.html",
+    "start_url": "/",
     "display": "standalone",
     "theme_color": "#ffff",
     "icons": [{
